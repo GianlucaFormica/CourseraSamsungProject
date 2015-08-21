@@ -86,6 +86,8 @@ syXdataGrouped<-dplyr::group_by(syXdata, Subject, Activity)
 #Remove unused syXdata from environment 
 rm(syXdata)
 
-#takes means 
+#Take the means 
 syXdataGroupedMeans<-dplyr::summarise_each(syXdataGrouped, funs(mean))
 
+#Write to text.file
+write.table(syXdataGroupedMeans, file="myTidyData.txt", row.name=FALSE)
