@@ -20,10 +20,14 @@ features_list<-read.table("./UCI HAR Dataset/features.txt")
 colnames(X_df)<-features_list[,2]
 
 #Select feature labels that contain mean() or std()
-std_mean_X_cols<-grep("mean()|std()",features_list[,2])
+std_mean_X_cols<-grep("mean|std()",features_list[,2])
 
 #Keep only selected variables
-X_df_2<-X_df[,std_mean_X_cols]
+X_df_2<-X_df[ ,std_mean_X_cols]
+
+#As the average of the mean & standard deviation will be taken latter, 
+# the column names are changed to have the prefix "Avg-"
+colnames(X_df_2)<-paste("Avg",colnames(X_df_2), sep = "-"  )
 
 #Free up memory
 rm(X_df, features_list, std_mean_X_cols, X_train_df, X_test_df)
@@ -33,7 +37,7 @@ y_train_df<-read.table("./UCI HAR Dataset/train/y_train.txt")
 y_test_df <-read.table("./UCI HAR Dataset/test/y_test.txt")
 
 #Join y-files
-y_df<-dplyr::bind_rows(y_train_df,y_test_df)
+y_df<-dplyr::bind_rows(y_train_df, y_test_df)
 
 #Replace activity numbers in y-data with activity labels
 activity<-c("WALKING", "WALKING_UPSTAIRS", "WALKING_DOWNSTAIRS", "SITTING", "STANDING", "LAYING")
