@@ -42,9 +42,7 @@ y_df<-dplyr::bind_rows(y_train_df,y_test_df)
 rm(y_train_df, y_test_df)
 
 #Replace activity numbers in y-data with activity labels
-activity_labels<-read.table("./UCI HAR Dataset/activity_labels.txt")
-activity<-activity_labels[,2]
-#activity<-c("WALKING", "WALKING_UPSTAIRS", "WALKING_DOWNSTAIRS", "SITTING", "STANDING", "LAYING")
+activity<-c("WALKING", "WALKING_UPSTAIRS", "WALKING_DOWNSTAIRS", "SITTING", "STANDING", "LAYING")
 l<-dim(y_df)
 ii<-1:l[1]
 for (i in ii){
