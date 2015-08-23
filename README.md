@@ -1,13 +1,11 @@
-This project includes 4 files plus a zip file of the data analysed
+This project includes 3 files as follows
 
-1. README.md (this document)
-
-2. CodeBook.md 
+1. CodeBook.md 
    Describes the variables, the data, and any transformations to clean up the data 
 
-3. run_analysis.R
+2. run_analysis.R
    R code used for generating the tidy data
 
-4. myTidyData.txt 
+3. myTidyData.txt 
    The output from the R script above 
 
