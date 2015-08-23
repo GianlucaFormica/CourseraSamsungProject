@@ -1,7 +1,6 @@
-#set working directory
+#Do once if tidyr & dplyr packages are not yet installed
 #install.packages("tidyr")
 #install.packages("dplyr")
-##setwd("C:/Users/Gianluca/Documents/R/")
 
 #Load dplyr and tidyr
 library(dplyr)
@@ -18,29 +17,17 @@ X_df<-dplyr::bind_rows(X_train_df,X_test_df)
 rm(X_train_df, X_test_df)
 
 #Read the features file
-##setwd("./UCI HAR Dataset/")
 features_list<-read.table("./UCI HAR Dataset/features.txt")
 
-##change back to dir
-##setwd("C:/Users/Gianluca/Documents/R/")
-
-#add labels to X-data
+#Add the labels from features.txt to X-data
 colnames(X_df)<-features_list[,2]
 
-#new step
-std_mean_X_cols<-grep("mean|std",features_list[,2])
+#Select feature labels that contain mean() or std()
+std_mean_X_cols<-grep("mean()|std()",features_list[,2])
 X_df_2<-X_df[,std_mean_X_cols]
 
-##select varibales with std and mean
-##std_X_cols<-grep("mean|std",colnames(X_df))
-##mean_X_cols<-grep("mean",colnames(X_df))
-
-##get the observations
-##std_cols_data  <- X_df[, std_X_cols]
-##mean_cols_data <- X_df[, mean_X_cols]
-
 #Free up memory
-rm(X_df)
+rm(X_df, features_list, std_mean_X_cols)
 
 #Read y-files
 y_train_df<-read.table("./UCI HAR Dataset/train/y_train.txt")
@@ -57,6 +44,8 @@ ii<-1:l[1]
 for (i in ii){
   y_df[i,1]<-activity[as.numeric(y_df[i,1])]
 }
+
+rm(activity, i, ii, l)
 
 #Add Activity label to y_df
 colnames(y_df)<-"Activity"
@@ -86,8 +75,11 @@ syXdataGrouped<-dplyr::group_by(syXdata, Subject, Activity)
 #Remove unused syXdata from environment 
 rm(syXdata)
 
-#Take the means 
+#Take the means of each variable per activity and per subject
 syXdataGroupedMeans<-dplyr::summarise_each(syXdataGrouped, funs(mean))
 
-#Write to text.file
+#Remove unused syXdataGrouped from environment 
+rm(syXdataGrouped)
+
+#Write to text.file 
 write.table(syXdataGroupedMeans, file="myTidyData.txt", row.name=FALSE)
