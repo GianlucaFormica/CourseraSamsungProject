@@ -39,8 +39,9 @@ y_test_df <-read.table("./UCI HAR Dataset/test/y_test.txt")
 #Join y-files
 y_df<-dplyr::bind_rows(y_train_df, y_test_df)
 
-#Replace activity numbers in y-data with activity labels
-activity<-c("WALKING", "WALKING_UPSTAIRS", "WALKING_DOWNSTAIRS", "SITTING", "STANDING", "LAYING")
+#Replace activity numbers in y-data with activity labels in activity_labels.txt
+activityTBL <-read.table("./UCI HAR Dataset/activity_labels.txt", stringsAsFactors=FALSE)
+activity<-activityTBL[,2]
 l<-dim(y_df)
 ii<-1:l[1]
 for (i in ii){
