@@ -11,6 +11,3 @@ This project includes 4 files plus a zip file of the data analysed
 4. myTidyData.txt 
    The output from the R script above 
 
-5. UCI HAR Dataset.zip
-   The R script makes the assumption that this dataset is unzipped in the working directory 
-
